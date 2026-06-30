@@ -10,7 +10,9 @@ export const DocumentRenderer: React.FC = () => {
     flaggedWrongSpans, 
     userRevealedSpans, 
     selectedSpanId, 
-    setSelectedSpanId 
+    setSelectedSpanId,
+    toggleFlaggedWrong,
+    showToast
   } = useTrustStore();
 
   if (!currentDoc) {
@@ -66,7 +68,7 @@ export const DocumentRenderer: React.FC = () => {
           // Solid black-bar style: charcoal background, mono label, hides text
           bgStyle = isSelected 
             ? 'bg-slate-800 dark:bg-slate-200 text-teal-400 dark:text-teal-700 ring-2 ring-teal-500 scale-[1.02]' 
-            : 'bg-slate-900 dark:bg-slate-800 text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-700 hover:scale-[1.01]';
+            : 'bg-slate-900 dark:bg-slate-800 text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-750 hover:scale-[1.01]';
           borderStyle = 'border border-slate-950 dark:border-slate-900';
           textStyle = 'px-2 py-0.5 rounded cursor-pointer font-mono font-bold text-xs select-none shadow-sm transition-all duration-200 inline-flex items-center space-x-1 uppercase tracking-wider';
         }
@@ -87,8 +89,13 @@ export const DocumentRenderer: React.FC = () => {
             e.stopPropagation();
             setSelectedSpanId(span.id);
           }}
+          onDoubleClick={(e) => {
+            e.stopPropagation();
+            toggleFlaggedWrong(span.id);
+            showToast(`Overridden: ${span.type} is now ${isRedacted ? 'kept visible' : 'redacted'}`);
+          }}
           className={`${textStyle} ${bgStyle} ${borderStyle} mx-0.5`}
-          title={`Click to inspect: ${span.type} (${Math.round(span.confidence * 100)}% Confidence)`}
+          title={`Click to inspect | Double-click to ${isRedacted ? 'Unmask / Keep' : 'Mask / Redact'}`}
         >
           {isRedacted ? (
             isRevealed ? (

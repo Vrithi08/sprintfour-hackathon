@@ -7,7 +7,7 @@ import { ArrowLeft, Copy, Download, Check, FileText, ShieldCheck, AlertTriangle,
 export const DiffView: React.FC = () => {
   const navigate = useNavigate();
   const { docId } = useParams<{ docId: string }>();
-  const { currentDoc, threshold, flaggedWrongSpans, showToast } = useTrustStore();
+  const { currentDoc, threshold, flaggedWrongSpans, showToast, toggleFlaggedWrong } = useTrustStore();
 
   const [copied, setCopied] = React.useState(false);
   const [showVerifyModal, setShowVerifyModal] = React.useState(false);
@@ -122,12 +122,16 @@ export const DiffView: React.FC = () => {
       segments.push(
         <span 
           key={span.id} 
-          className={`px-1 py-0.5 rounded text-xs font-mono font-bold font-semibold select-all mx-0.5 ${
+          onClick={() => {
+            toggleFlaggedWrong(span.id);
+            showToast(`Overridden: ${span.type} is now ${isRedacted ? 'kept visible' : 'redacted'}`);
+          }}
+          className={`px-1 py-0.5 rounded text-xs font-mono font-bold font-semibold cursor-pointer hover:opacity-80 transition-opacity mx-0.5 ${
             isRedacted 
               ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-800 dark:text-rose-300 border border-dashed border-rose-300 dark:border-rose-900' 
               : 'bg-amber-50 dark:bg-amber-950/20 text-amber-800 dark:text-amber-300 border border-dotted border-amber-300 dark:border-amber-900'
           }`}
-          title={`${span.type}: ${isRedacted ? 'Will be redacted' : 'Will be kept'}`}
+          title={`Click to ${isRedacted ? 'Unmask / Keep' : 'Mask / Redact'}`}
         >
           {span.text}
         </span>
@@ -167,7 +171,12 @@ export const DiffView: React.FC = () => {
         segments.push(
           <span 
             key={span.id} 
-            className="px-2 py-0.5 rounded bg-slate-900 text-slate-400 dark:bg-slate-800 dark:text-slate-500 text-xs font-mono font-bold tracking-wider select-none border border-slate-950 dark:border-slate-900 mx-0.5"
+            onClick={() => {
+              toggleFlaggedWrong(span.id);
+              showToast(`Overridden: ${span.type} is now kept visible`);
+            }}
+            className="px-2 py-0.5 rounded bg-slate-900 text-slate-400 dark:bg-slate-800 dark:text-slate-500 text-xs font-mono font-bold tracking-wider cursor-pointer hover:bg-slate-800 dark:hover:bg-slate-700 transition-colors border border-slate-950 dark:border-slate-900 mx-0.5"
+            title="Click to Unmask / Keep"
           >
             [{span.type}]
           </span>
@@ -176,7 +185,12 @@ export const DiffView: React.FC = () => {
         segments.push(
           <span 
             key={span.id} 
-            className="px-1 py-0.5 rounded border border-dotted border-amber-300 dark:border-amber-900 text-slate-800 dark:text-slate-200 text-xs font-mono mx-0.5"
+            onClick={() => {
+              toggleFlaggedWrong(span.id);
+              showToast(`Overridden: ${span.type} is now redacted`);
+            }}
+            className="px-1 py-0.5 rounded border border-dotted border-amber-300 dark:border-amber-900 text-slate-800 dark:text-slate-200 text-xs font-mono cursor-pointer hover:bg-amber-100/30 dark:hover:bg-slate-800/30 transition-colors mx-0.5"
+            title="Click to Mask / Redact"
           >
             {span.text}
           </span>
