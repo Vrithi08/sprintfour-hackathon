@@ -229,10 +229,11 @@ export const Inspector: React.FC = () => {
       }
     } catch (err) {
       console.error(err);
-      const errorMsg = 'Failed to connect to the explanation service. Please check your internet connection.';
-      setStreamText(errorMsg);
+      // Automatically fall back to the local context-aware explanation engine
+      const fallbackAnswer = generateLocalFallback(span, userQuestion, worriedMode);
+      setStreamText(fallbackAnswer);
       setTimeout(() => {
-        addAskWhyQA(span.id, userQuestion, errorMsg, true);
+        addAskWhyQA(span.id, userQuestion, fallbackAnswer, true);
         setStreamText(null);
         setLoading(false);
       }, 1500);
