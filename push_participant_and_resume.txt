@@ -1,0 +1,15 @@
+cd "c:\Users\kmvri\OneDrive\Documents\Desktop\CSE 2023-2027\MY PROJECTS\sprintfour-hackathon"
+
+if not exist repo\ (mkdir repo)
+cd repo
+
+git clone https://github.com/Vrithi08/sprintfour-hackathon.git .
+git remote remove origin 2>nul
+git remote add origin https://github.com/Vrithi08/sprintfour-hackathon.git
+
+copy /Y ..\Vrithika_K_M_May2026.pdf .
+copy /Y ..\participant.md .
+
+git add Vrithika_K_M_May2026.pdf participant.md
+git commit -m "Add resume and participant details"
+git push -u origin HEAD
