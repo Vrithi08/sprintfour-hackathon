@@ -1,0 +1,52 @@
+{
+  "id": "support",
+  "title": "Customer Support Chat",
+  "originalText": "Chat Transcript - Ticket #89112\nAgent: Support Bot\nUser: Alex. M\n\nUser: Hi, my order hasn't arrived. My address is 123 Fake Street, Apt 4B, Springfield.\nAgent: I can help. Can I have your IP address just to verify your login session?\nUser: Sure it is 192.168.1.100. Also my alternative email is alex.m.secret@gmail.com\nAgent: Thank you. I will check that now. Please hold on a moment.",
+  "spans": [
+    {
+      "id": "support_span_1",
+      "text": "Alex. M",
+      "type": "NAME",
+      "start": 57,
+      "end": 64,
+      "confidence": 0.75,
+      "status": "redacted",
+      "reasoning": "User name in chat. Redacted for privacy.",
+      "reasoningWorried": "Even partial names in support chats should be redacted to maintain customer anonymity."
+    },
+    {
+      "id": "support_span_2",
+      "text": "123 Fake Street, Apt 4B, Springfield",
+      "type": "LOC",
+      "start": 115,
+      "end": 151,
+      "confidence": 0.91,
+      "status": "redacted",
+      "reasoning": "Full residential address.",
+      "reasoningWorried": "Physical addresses are highly sensitive PII and must be fully removed."
+    },
+    {
+      "id": "support_span_3",
+      "text": "192.168.1.100",
+      "type": "IP_ADDRESS",
+      "start": 251,
+      "end": 264,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "IP Address. Can be used to geolocate or identify a network.",
+      "reasoningWorried": "IP addresses are considered personal data under GDPR and CCPA."
+    },
+    {
+      "id": "support_span_4",
+      "text": "alex.m.secret@gmail.com",
+      "type": "EMAIL",
+      "start": 295,
+      "end": 318,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Personal email address.",
+      "reasoningWorried": "Email addresses are direct identifiers and must be redacted."
+    }
+  ],
+  "safetyScore": 45
+}

@@ -1,0 +1,141 @@
+{
+  "id": "legal",
+  "title": "Legal Demand — Quantum Tech Corp.",
+  "originalText": "DEMAND FOR PAYMENT\nDate: June 15, 2026\nTo: Apex Logistics Solutions, Inc.\nAttn: Robert Sterling, VP of Operations\nFrom: Legal Department, Quantum Tech Corp.\n\nRe: Breach of Contract and Outstanding Balance of $45,210.00\nThis letter serves as a formal demand for payment. Apex Logistics Solutions failed to wire funds to our Silicon Valley Bank account (Routing: 121140024, Account: 987654321) by May 1, 2026.\nPlease contact Legal Counsel Jane Smith at j.smith@quantumtech.com or call 408-555-9088.\n\nSincerely,\nJane Smith\nQuantum Tech Corp.",
+  "spans": [
+    {
+      "id": "legal_span_1",
+      "text": "June 15, 2026",
+      "type": "DATE",
+      "start": 25,
+      "end": 38,
+      "confidence": 0.88,
+      "status": "flagged_kept",
+      "reasoning": "Letter execution date. Essential to retain for legal validity and deadline tracking.",
+      "reasoningWorried": "The document date is critical to establish the timeline of a legal dispute, so it is left visible for legal auditing."
+    },
+    {
+      "id": "legal_span_2",
+      "text": "Apex Logistics Solutions, Inc.",
+      "type": "ORG",
+      "start": 43,
+      "end": 73,
+      "confidence": 0.91,
+      "status": "flagged_kept",
+      "reasoning": "Recipient corporate entity name. Allowed to remain visible as corporate entities have lower privacy protection requirements than individuals.",
+      "reasoningWorried": "Company names are matters of public commercial record, so we leave corporate entity names visible to clarify the disputing parties."
+    },
+    {
+      "id": "legal_span_3",
+      "text": "Robert Sterling",
+      "type": "NAME",
+      "start": 80,
+      "end": 95,
+      "confidence": 0.95,
+      "status": "redacted",
+      "reasoning": "Name of corporate representative. Redacted to protect individual employee privacy in legal filings.",
+      "reasoningWorried": "Even in corporate letters, employee names should be redacted to prevent individuals from being publicly targetable in legal disputes."
+    },
+    {
+      "id": "legal_span_4",
+      "text": "Quantum Tech Corp.",
+      "type": "ORG",
+      "start": 138,
+      "end": 156,
+      "confidence": 0.89,
+      "status": "flagged_kept",
+      "reasoning": "Sender corporate entity name. Maintained for institutional identification.",
+      "reasoningWorried": "We leave the client corporation's name visible because they are the legal entity raising the dispute."
+    },
+    {
+      "id": "legal_span_5",
+      "text": "$45,210.00",
+      "type": "OTHER",
+      "start": 208,
+      "end": 218,
+      "confidence": 0.78,
+      "status": "flagged_kept",
+      "reasoning": "Monetary amount under dispute. Allowed to remain visible as it is a core commercial term, not personal finance data.",
+      "reasoningWorried": "The specific dispute amount is essential context for legal operations and does not violate any individual's personal financial privacy."
+    },
+    {
+      "id": "legal_span_6",
+      "text": "Silicon Valley Bank",
+      "type": "ORG",
+      "start": 323,
+      "end": 342,
+      "confidence": 0.86,
+      "status": "redacted",
+      "reasoning": "Financial institution name. Redacted to prevent exposure of banking relationships.",
+      "reasoningWorried": "We hide the specific bank name to reduce the risk of spear-phishing campaigns targeting the client's corporate bank accounts."
+    },
+    {
+      "id": "legal_span_7",
+      "text": "121140024",
+      "type": "OTHER",
+      "start": 361,
+      "end": 370,
+      "confidence": 0.97,
+      "status": "redacted",
+      "reasoning": "Bank Routing Transit Number (RTN). High-risk corporate financial identifier.",
+      "reasoningWorried": "Routing numbers can be combined with account numbers to execute unauthorized wire withdrawals. Redacting this is critical."
+    },
+    {
+      "id": "legal_span_8",
+      "text": "987654321",
+      "type": "OTHER",
+      "start": 381,
+      "end": 390,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Bank Account Number. High-risk personal/corporate financial identifier.",
+      "reasoningWorried": "Account numbers are highly sensitive financial details. Leaving them visible puts the corporate treasury at risk of fraud."
+    },
+    {
+      "id": "legal_span_9",
+      "text": "May 1, 2026",
+      "type": "DATE",
+      "start": 395,
+      "end": 406,
+      "confidence": 0.82,
+      "status": "flagged_kept",
+      "reasoning": "Deadline or date of breach. Kept visible for contract milestone tracking.",
+      "reasoningWorried": "Breach dates are legal facts necessary for measuring statutory limitations and are kept to maintain readability."
+    },
+    {
+      "id": "legal_span_10",
+      "text": "Jane Smith",
+      "type": "NAME",
+      "start": 437,
+      "end": 447,
+      "confidence": 0.92,
+      "status": "redacted",
+      "reasoning": "Legal Counsel's name. Redacted to prevent direct personal targeting of representing legal staff.",
+      "reasoningWorried": "Legal representatives can face harassment if their names are visible in public dispute archives. We hide individual counsel names."
+    },
+    {
+      "id": "legal_span_11",
+      "text": "j.smith@quantumtech.com",
+      "type": "EMAIL",
+      "start": 451,
+      "end": 474,
+      "confidence": 0.98,
+      "status": "redacted",
+      "reasoning": "Professional email address. Redacted to maintain corporate communication security.",
+      "reasoningWorried": "Redacting individual professional emails blocks bad actors from launching phishing campaigns directed at the counsel."
+    },
+    {
+      "id": "legal_span_12",
+      "text": "408-555-9088",
+      "type": "PHONE",
+      "start": 483,
+      "end": 495,
+      "confidence": 0.94,
+      "status": "redacted",
+      "reasoning": "Phone number of individual counsel. Redacted to prevent spam/harassment.",
+      "reasoningWorried": "Counsel's direct phone line is hidden to avoid spam, robocalls, and targeted telephone fraud attempts."
+    }
+  ],
+  "safetyScore": 58,
+  "analyzedAt": "2026-06-30T07:39:51.624Z"
+}

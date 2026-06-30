@@ -1,0 +1,108 @@
+{
+  "id": "medical",
+  "title": "Medical Referral — Michael Thompson",
+  "originalText": "REFERRAL LETTER\nDate: 28 May 2026\nFrom: Dr. Sarah Jenkins, MD, Chief of Cardiology\nTo: Dr. Alan Mercer, MD, St. Jude Medical Center, 45 Medical Plaza, Boston, MA 02118\nPatient: Michael Thompson (DOB: 12/04/1978, MRN: #492-019-3A)\n\nDear Dr. Mercer,\nI am referring Mr. Michael Thompson for a follow-up cardiological evaluation. The patient has a history of mild hypertension.\nPlease contact him at m.thompson@netlink.org or call 617-555-0143 to schedule his appointment.\nThank you for your collaboration.\n\nSincerely,\nDr. Sarah Jenkins",
+  "spans": [
+    {
+      "id": "medical_span_1",
+      "text": "28 May 2026",
+      "type": "DATE",
+      "start": 22,
+      "end": 33,
+      "confidence": 0.81,
+      "status": "flagged_kept",
+      "reasoning": "Document date. Marked as safe to keep to maintain medical timeline integrity.",
+      "reasoningWorried": "The referral date is kept visible so clinical staff know how recent the document is, which is crucial for scheduling."
+    },
+    {
+      "id": "medical_span_2",
+      "text": "Dr. Sarah Jenkins",
+      "type": "NAME",
+      "start": 40,
+      "end": 57,
+      "confidence": 0.89,
+      "status": "flagged_kept",
+      "reasoning": "Referring clinician name. Kept visible for referral communication routing.",
+      "reasoningWorried": "The doctor's name is left unredacted so the receiving clinic knows who requested the referral and who to contact."
+    },
+    {
+      "id": "medical_span_3",
+      "text": "Dr. Alan Mercer",
+      "type": "NAME",
+      "start": 87,
+      "end": 102,
+      "confidence": 0.9,
+      "status": "flagged_kept",
+      "reasoning": "Receiving clinician name. Kept visible for routing.",
+      "reasoningWorried": "Leaving the receiving specialist's name visible ensures the letter reaches the correct care team member."
+    },
+    {
+      "id": "medical_span_4",
+      "text": "St. Jude Medical Center, 45 Medical Plaza, Boston, MA 02118",
+      "type": "ADDRESS",
+      "start": 108,
+      "end": 167,
+      "confidence": 0.94,
+      "status": "flagged_kept",
+      "reasoning": "Medical facility address. Kept visible because it represents institutional business address, not personal address.",
+      "reasoningWorried": "This is a hospital address, not a residential one, so it remains visible for delivery purposes without compromising patient privacy."
+    },
+    {
+      "id": "medical_span_5",
+      "text": "Michael Thompson",
+      "type": "NAME",
+      "start": 177,
+      "end": 193,
+      "confidence": 0.98,
+      "status": "redacted",
+      "reasoning": "Identified as the patient's name. Redaction required under healthcare privacy laws.",
+      "reasoningWorried": "Patient name is the most sensitive PII here. Redacting it protects the patient's medical records from being linked to them."
+    },
+    {
+      "id": "medical_span_6",
+      "text": "12/04/1978",
+      "type": "DATE",
+      "start": 200,
+      "end": 210,
+      "confidence": 0.96,
+      "status": "redacted",
+      "reasoning": "Patient's Date of Birth. High-risk healthcare identifier.",
+      "reasoningWorried": "A patient's birthdate combined with medical details could allow identity thieves to access confidential health accounts."
+    },
+    {
+      "id": "medical_span_7",
+      "text": "#492-019-3A",
+      "type": "OTHER",
+      "start": 217,
+      "end": 228,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Medical Record Number (MRN). Unique health identifier requiring redaction under HIPAA guidelines.",
+      "reasoningWorried": "Medical Record Numbers are unique keys to a patient's entire medical file. We hide them to prevent health insurance fraud."
+    },
+    {
+      "id": "medical_span_8",
+      "text": "m.thompson@netlink.org",
+      "type": "EMAIL",
+      "start": 396,
+      "end": 418,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Patient contact email address. Redacted to prevent communication exposure.",
+      "reasoningWorried": "Patient email addresses must be hidden to block direct tracking and phishing attempts targeting vulnerable individuals."
+    },
+    {
+      "id": "medical_span_9",
+      "text": "617-555-0143",
+      "type": "PHONE",
+      "start": 427,
+      "end": 439,
+      "confidence": 0.98,
+      "status": "redacted",
+      "reasoning": "Patient contact phone number. Redacted for privacy.",
+      "reasoningWorried": "Your phone number is redacted so unsolicited callers cannot contact you regarding your medical conditions."
+    }
+  ],
+  "safetyScore": 33,
+  "analyzedAt": "2026-06-30T07:39:51.624Z"
+}

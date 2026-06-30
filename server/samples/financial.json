@@ -1,0 +1,96 @@
+{
+  "id": "financial",
+  "title": "Q3 Financial Audit",
+  "originalText": "Q3 Financial Audit\nAccount Name: Omega Holdings LLC\nAccount No: 4490-1234-5678-9012\nSWIFT: BOFAUS3N\nContact: Emily Chen (CFO)\nEmail: e.chen@omega-holdings.example.com\nPhone: (212) 555-0199\n\nAudit findings: The transfer of $2.5M on 2026-09-12 was flagged by the system.",
+  "spans": [
+    {
+      "id": "financial_span_1",
+      "text": "Omega Holdings LLC",
+      "type": "ORG",
+      "start": 33,
+      "end": 51,
+      "confidence": 0.92,
+      "status": "flagged_kept",
+      "reasoning": "Corporate entity name, not considered personal PII.",
+      "reasoningWorried": "Company names are left visible to identify the audited entity."
+    },
+    {
+      "id": "financial_span_2",
+      "text": "4490-1234-5678-9012",
+      "type": "FIN",
+      "start": 64,
+      "end": 83,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Credit card / bank account number. Strictly confidential.",
+      "reasoningWorried": "Financial account numbers must always be fully redacted to prevent severe financial fraud."
+    },
+    {
+      "id": "financial_span_3",
+      "text": "BOFAUS3N",
+      "type": "FIN",
+      "start": 91,
+      "end": 99,
+      "confidence": 0.45,
+      "status": "flagged_kept",
+      "reasoning": "SWIFT code. Identifies the bank branch, not a specific personal account.",
+      "reasoningWorried": "SWIFT codes are public bank routing identifiers. Low confidence because it resembles a generic ID."
+    },
+    {
+      "id": "financial_span_4",
+      "text": "Emily Chen",
+      "type": "NAME",
+      "start": 109,
+      "end": 119,
+      "confidence": 0.96,
+      "status": "redacted",
+      "reasoning": "Individual name. Redacted to protect personal identity.",
+      "reasoningWorried": "Names of specific employees must be hidden to prevent targeted social engineering."
+    },
+    {
+      "id": "financial_span_5",
+      "text": "e.chen@omega-holdings.example.com",
+      "type": "EMAIL",
+      "start": 133,
+      "end": 166,
+      "confidence": 0.98,
+      "status": "redacted",
+      "reasoning": "Personalized email address.",
+      "reasoningWorried": "Direct contact information for an individual is highly sensitive."
+    },
+    {
+      "id": "financial_span_6",
+      "text": "(212) 555-0199",
+      "type": "PHONE",
+      "start": 174,
+      "end": 188,
+      "confidence": 0.94,
+      "status": "redacted",
+      "reasoning": "Direct phone number.",
+      "reasoningWorried": "Phone numbers are direct communication channels that must be redacted."
+    },
+    {
+      "id": "financial_span_7",
+      "text": "$2.5M",
+      "type": "OTHER",
+      "start": 222,
+      "end": 227,
+      "confidence": 0.82,
+      "status": "flagged_kept",
+      "reasoning": "Transaction amount. Kept for audit context.",
+      "reasoningWorried": "The transaction size is critical to the audit report's findings."
+    },
+    {
+      "id": "financial_span_8",
+      "text": "2026-09-12",
+      "type": "DATE",
+      "start": 231,
+      "end": 241,
+      "confidence": 0.95,
+      "status": "flagged_kept",
+      "reasoning": "Date of transaction. Necessary for timeline.",
+      "reasoningWorried": "Dates of events are required context and do not expose individual identity."
+    }
+  ],
+  "safetyScore": 72
+}

@@ -1,0 +1,119 @@
+{
+  "id": "resume",
+  "title": "Applicant Resume — Vrithika K. M.",
+  "originalText": "Vrithika K. M.\nEmail: vrithika.km@gmail.com | Phone: +91-98765-43210 | DOB: 14/10/2004\nAddress: 12 Elm Street, Bangalore, Karnataka, 560001\nSSN: 987-65-4321\n\nEDUCATION\nB.Tech in Computer Science, VIT University (Vellore Institute of Technology)\n\nEXPERIENCE\nSoftware Dev Intern at InnovateTech Corp. (July 2025)\n- Assisted Senior Developer John Doe on React projects.",
+  "spans": [
+    {
+      "id": "resume_span_1",
+      "text": "Vrithika K. M.",
+      "type": "NAME",
+      "start": 0,
+      "end": 14,
+      "confidence": 0.98,
+      "status": "redacted",
+      "reasoning": "Identified as the main subject's name in the header of the resume.",
+      "reasoningWorried": "We redacted this because sharing your full name on public platforms opens you up to social engineering and identity theft."
+    },
+    {
+      "id": "resume_span_2",
+      "text": "vrithika.km@gmail.com",
+      "type": "EMAIL",
+      "start": 22,
+      "end": 43,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Standard email format detected associated with the applicant.",
+      "reasoningWorried": "Email addresses are prime targets for spam campaigns and phishing attempts. Redacting this keeps your inbox secure."
+    },
+    {
+      "id": "resume_span_3",
+      "text": "+91-98765-43210",
+      "type": "PHONE",
+      "start": 53,
+      "end": 68,
+      "confidence": 0.97,
+      "status": "redacted",
+      "reasoning": "Matches standard international phone number structure.",
+      "reasoningWorried": "Your phone number can be exploited to trace your location or conduct SIM-swapping attacks. Keeping it hidden is safest."
+    },
+    {
+      "id": "resume_span_4",
+      "text": "14/10/2004",
+      "type": "DATE",
+      "start": 76,
+      "end": 86,
+      "confidence": 0.92,
+      "status": "redacted",
+      "reasoning": "Identified as a date of birth.",
+      "reasoningWorried": "Date of birth is a key credential used by banks and services for verification. Exposing it online increases fraud risk."
+    },
+    {
+      "id": "resume_span_5",
+      "text": "12 Elm Street, Bangalore, Karnataka, 560001",
+      "type": "ADDRESS",
+      "start": 96,
+      "end": 139,
+      "confidence": 0.95,
+      "status": "redacted",
+      "reasoning": "Detected physical residential address containing street, city, state, and postal code.",
+      "reasoningWorried": "Revealing your home address presents real-world physical safety concerns. We keep your exact location private."
+    },
+    {
+      "id": "resume_span_6",
+      "text": "987-65-4321",
+      "type": "SSN",
+      "start": 145,
+      "end": 156,
+      "confidence": 0.99,
+      "status": "redacted",
+      "reasoning": "Matches National Identification (SSN) pattern of XXX-XX-XXXX.",
+      "reasoningWorried": "An SSN is the ultimate key to identity fraud. Leaving it visible is extremely high risk and must be avoided."
+    },
+    {
+      "id": "resume_span_7",
+      "text": "VIT University (Vellore Institute of Technology)",
+      "type": "ORG",
+      "start": 196,
+      "end": 244,
+      "confidence": 0.45,
+      "status": "flagged_kept",
+      "reasoning": "Identified as an organization (educational institution). Confidence score is below threshold.",
+      "reasoningWorried": "This institution name was kept because school names are standard on resumes and are generally considered low risk."
+    },
+    {
+      "id": "resume_span_8",
+      "text": "InnovateTech Corp.",
+      "type": "ORG",
+      "start": 280,
+      "end": 298,
+      "confidence": 0.88,
+      "status": "flagged_kept",
+      "reasoning": "Identified as an employer organization but kept visible to maintain context of work history under typical job application policies.",
+      "reasoningWorried": "We allowed this company name to stay visible because removing work history details makes a resume unreadable to employers."
+    },
+    {
+      "id": "resume_span_9",
+      "text": "July 2025",
+      "type": "DATE",
+      "start": 300,
+      "end": 309,
+      "confidence": 0.72,
+      "status": "flagged_kept",
+      "reasoning": "Date of employment duration. Marked as safe to keep according to standard resume analysis policies.",
+      "reasoningWorried": "Employment timelines are left visible to show your experience length, which poses minimal identity risk."
+    },
+    {
+      "id": "resume_span_10",
+      "text": "John Doe",
+      "type": "NAME",
+      "start": 339,
+      "end": 347,
+      "confidence": 0.85,
+      "status": "redacted",
+      "reasoning": "Detected as a third-party name in the description of experience.",
+      "reasoningWorried": "We redacted this colleague's name to respect their privacy and prevent mapping your professional network without consent."
+    }
+  ],
+  "safetyScore": 45,
+  "analyzedAt": "2026-06-30T07:39:51.607Z"
+}
