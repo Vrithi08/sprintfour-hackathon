@@ -34,6 +34,73 @@ const TypewriterText: React.FC<{ text: string; delay?: number }> = ({ text, dela
   return <span className="typing-cursor font-medium">{displayedText}</span>;
 };
 
+// ---- Local fallback engine (used when LLM is unavailable) ----
+// Produces a unique, contextual answer per span based on type, status,
+// confidence level, the user's question, and worried-mode toggle.
+function generateLocalFallback(
+  span: { text: string; type: string; confidence: number; status: string; reasoning: string; reasoningWorried: string },
+  userQuestion: string,
+  worriedMode: boolean
+): string {
+  const conf = Math.round(span.confidence * 100);
+  const isRedacted = span.status === 'redacted';
+  const maskedText = isRedacted ? `[${span.type}]` : `"${span.text}"`;
+
+  // Type-specific detail
+  const typeDetails: Record<string, { risk: string; regulation: string; worriedExtra: string }> = {
+    NAME:       { risk: 'identity theft or targeted social engineering', regulation: 'GDPR Article 4(1), CCPA §1798.140(o)', worriedExtra: 'Your name is the single most important piece of your identity — we take extra care to ensure it never leaks.' },
+    EMAIL:      { risk: 'phishing attacks and spam campaigns', regulation: 'CAN-SPAM Act, GDPR Article 9', worriedExtra: 'Email addresses are direct attack vectors for phishing. We redact them to keep you safe from unsolicited contact.' },
+    PHONE:      { risk: 'vishing (voice phishing) or SIM-swap fraud', regulation: 'TCPA, GDPR Article 4(1)', worriedExtra: 'Phone numbers can be exploited for SIM-swap attacks. Keeping this hidden protects you from account takeover.' },
+    LOC:        { risk: 'physical safety concerns and stalking', regulation: 'GDPR Article 9, various state privacy laws', worriedExtra: 'A physical address can put someone at real-world risk. We always err on the side of caution here.' },
+    DATE:       { risk: 'timeline reconstruction that could de-anonymize individuals', regulation: 'HIPAA Safe Harbor, GDPR Recital 26', worriedExtra: 'Dates may seem harmless, but combined with other data they can uniquely identify a person.' },
+    ORG:        { risk: 'corporate espionage or competitive intelligence leakage', regulation: 'Trade Secrets Act, NDA enforcement', worriedExtra: 'Organization names are sometimes kept visible when they are public entities, but we flag them for your review.' },
+    FIN:        { risk: 'financial fraud, unauthorized transactions, or account takeover', regulation: 'PCI-DSS, GLBA, SOX', worriedExtra: 'Financial data is among the most sensitive categories. Even partial account numbers can be exploited by fraudsters.' },
+    IP_ADDRESS: { risk: 'network intrusion, geolocation tracking, or DDoS targeting', regulation: 'GDPR Article 4(1), CCPA §1798.140(o)', worriedExtra: 'IP addresses are legally classified as personal data in many jurisdictions. We always redact them.' },
+    SSN:        { risk: 'identity fraud and credit damage', regulation: 'FCRA, state SSN protection laws', worriedExtra: 'Social security numbers are the highest-risk identifier. A single leak can cause years of damage.' },
+    OTHER:      { risk: 'contextual privacy leakage depending on surrounding data', regulation: 'General data minimization principles (GDPR Article 5)', worriedExtra: 'Even data that seems generic can become identifying when combined with other fields in the document.' },
+  };
+
+  const detail = typeDetails[span.type] || typeDetails['OTHER'];
+
+  // Confidence-based qualifier
+  let confQualifier: string;
+  if (conf >= 95) confQualifier = 'Our detection engine identified this with very high certainty.';
+  else if (conf >= 80) confQualifier = 'The detection confidence is strong, though a human reviewer should confirm.';
+  else if (conf >= 60) confQualifier = 'The confidence is moderate — this was flagged for manual review because the pattern match was not conclusive.';
+  else confQualifier = 'The confidence is relatively low, which means the system is unsure. This is exactly why a human auditor should verify the decision.';
+
+  // Status-specific explanation
+  let statusExplanation: string;
+  if (isRedacted) {
+    statusExplanation = `This ${span.type} was fully redacted to prevent ${detail.risk}. The applicable regulation(s) include ${detail.regulation}.`;
+  } else {
+    statusExplanation = `This ${span.type} (${maskedText}) was flagged but kept visible because the system determined it poses an acceptable risk in context. Reason: ${span.reasoning}`;
+  }
+
+  // Question-aware response — check if the user is asking about specific topics
+  const qLower = userQuestion.toLowerCase();
+  let questionResponse = '';
+  if (qLower.includes('why') && (qLower.includes('redact') || qLower.includes('mask') || qLower.includes('hidden') || qLower.includes('removed'))) {
+    questionResponse = isRedacted
+      ? `This was redacted because exposing a ${span.type} carries a risk of ${detail.risk}. ${confQualifier}`
+      : `This was kept visible because: ${span.reasoning}. However, the system still flagged it at ${conf}% confidence for your review.`;
+  } else if (qLower.includes('confidence') || qLower.includes('accurate') || qLower.includes('sure') || qLower.includes('certain')) {
+    questionResponse = `${confQualifier} At ${conf}% confidence, ${conf >= 80 ? 'the system is fairly certain this classification is correct.' : 'there is some ambiguity — this is why human oversight is essential.'}`;
+  } else if (qLower.includes('safe') || qLower.includes('risk') || qLower.includes('danger')) {
+    questionResponse = `The primary risk of exposing a ${span.type} is ${detail.risk}. ${isRedacted ? 'That is why it was redacted.' : 'It was kept visible because the contextual risk was deemed acceptable, but you may override this.'}`;
+  } else if (qLower.includes('regulation') || qLower.includes('law') || qLower.includes('compliance') || qLower.includes('gdpr') || qLower.includes('hipaa')) {
+    questionResponse = `The relevant regulation(s) for this ${span.type} include ${detail.regulation}. ${isRedacted ? 'Redaction ensures compliance with these standards.' : 'The system judged that keeping it visible does not violate these standards in this context.'}`;
+  } else {
+    questionResponse = statusExplanation;
+  }
+
+  if (worriedMode) {
+    return `${detail.worriedExtra} ${questionResponse} ${confQualifier} Rest assured — every redaction decision is logged and auditable, and you can always override it if needed.`;
+  }
+
+  return `${questionResponse} ${confQualifier}`;
+}
+
 export const Inspector: React.FC = () => {
   const { 
     currentDoc, 
@@ -141,10 +208,8 @@ export const Inspector: React.FC = () => {
       const data = await response.json();
 
       if (data.fallback) {
-        // Handle graceful degradation
-        const fallbackAnswer = worriedMode
-          ? `I'm unable to connect with our live explanation service right now. However, based on our local rules, this ${span.type} was flagged with ${Math.round(span.confidence * 100)}% confidence because exposing it could pose a privacy risk under typical data security guidelines.`
-          : `Live Q&A is currently unavailable. Based on pre-computed evaluation, this element represents a ${span.type} (confidence: ${Math.round(span.confidence * 100)}%). Local rule details: ${span.reasoning}`;
+        // Generate a rich, unique fallback answer per span
+        const fallbackAnswer = generateLocalFallback(span, userQuestion, worriedMode);
         
         setStreamText(fallbackAnswer);
         setTimeout(() => {
